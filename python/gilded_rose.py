@@ -16,6 +16,10 @@ class GildedRose(object):
     def _decorate_item(self, item):
         if item.name == "Sulfuras, Hand of Ragnaros":
             return Sulfuras(item)
+        elif item.name == "Aged Brie":
+            return AgedBrie(item)
+        elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+            return BackstageTicket(item)
         return ItemWrap(item)
 
     def update_quality(self):
@@ -95,6 +99,17 @@ class ItemWrap(Item):
     @quality.setter 
     def quality(self, value):
         self._item.quality = value 
+
+
+class AgedBrie(ItemWrap):
+    def __init__(self, item):
+        super().__init__(item) 
+
+
+class BackstageTicket(ItemWrap):
+    def __init__(self, item):
+        super().__init__(item) 
+
 
 class Sulfuras(ItemWrap):
     def __init__(self, item):
