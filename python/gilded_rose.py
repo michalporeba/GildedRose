@@ -14,6 +14,8 @@ class GildedRose(object):
         self.items = [self._decorate_item(item) for item in items]
 
     def _decorate_item(self, item):
+        if item.name == "Sulfuras, Hand of Ragnaros":
+            return Sulfuras(item)
         return ItemWrap(item)
 
     def update_quality(self):
@@ -33,8 +35,7 @@ class GildedRose(object):
                             if item.quality < MAX_QUANTITY:
                                 item.quality = item.quality + 1
 
-            if item.name != "Sulfuras, Hand of Ragnaros":
-                item.next_day()
+            item.next_day()
 
             if item.sell_in < 0:
                 if item.name != "Aged Brie":
@@ -88,5 +89,29 @@ class ItemWrap(Item):
     def quality(self, value):
         self._item.quality = value 
 
-
+class Sulfuras(ItemWrap):
+    _item: Item = None 
+    def __init__(self, item):
+        self._item = item 
     
+    def __repr__(self):
+        return super().__repr__()
+
+    def next_day(self):
+        pass
+
+    @property
+    def name(self):
+        return self._item.name
+
+    @property 
+    def sell_in(self):
+        return self._item.sell_in 
+
+    @property 
+    def quality(self):
+        return self._item.quality 
+
+    @quality.setter 
+    def quality(self, value):
+        self._item.quality = value 
