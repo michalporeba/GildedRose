@@ -34,7 +34,7 @@ class GildedRose(object):
                                 item.quality = item.quality + 1
 
             if item.name != "Sulfuras, Hand of Ragnaros":
-                item.sell_in = item.sell_in - 1
+                item.next_day()
 
             if item.sell_in < 0:
                 if item.name != "Aged Brie":
@@ -69,6 +69,9 @@ class ItemWrap(Item):
     def __repr__(self):
         return super().__repr__()
 
+    def next_day(self):
+        self._item.sell_in -= 1
+
     @property
     def name(self):
         return self._item.name
@@ -76,10 +79,6 @@ class ItemWrap(Item):
     @property 
     def sell_in(self):
         return self._item.sell_in 
-
-    @sell_in.setter 
-    def sell_in(self, value):
-        self._item.sell_in = value 
 
     @property 
     def quality(self):
