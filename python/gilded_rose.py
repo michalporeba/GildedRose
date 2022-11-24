@@ -24,11 +24,6 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.quality > MIN_QUANTITY:
-                    if item.name != "Sulfuras, Hand of Ragnaros":
-                        item.quality = item.quality - 1
-
             item.next_day()
 
             if item.sell_in < 0:
@@ -68,7 +63,8 @@ class ItemWrap(Item):
         self._item.sell_in -= 1
 
     def _adjust_quality(self):
-        pass 
+        if self._item.quality > MIN_QUANTITY:
+            self._item.quality -= 1
 
     def next_day(self):
         self._adjust_sell_in()    
