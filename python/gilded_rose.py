@@ -28,16 +28,6 @@ class GildedRose(object):
                 if item.quality > MIN_QUANTITY:
                     if item.name != "Sulfuras, Hand of Ragnaros":
                         item.quality = item.quality - 1
-            else:
-                if item.quality < MAX_QUANTITY:
-                    item.quality = item.quality + 1
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            if item.quality < MAX_QUANTITY:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < MAX_QUANTITY:
-                                item.quality = item.quality + 1
 
             item.next_day()
 
@@ -105,10 +95,24 @@ class AgedBrie(ItemWrap):
     def __init__(self, item):
         super().__init__(item) 
 
+    def _adjust_quality(self):
+        if self._item.quality < MAX_QUANTITY:
+            self._item.quality += 1
+
 
 class BackstageTicket(ItemWrap):
     def __init__(self, item):
         super().__init__(item) 
+
+    def _adjust_quality(self):
+        if self._item.quality < MAX_QUANTITY:
+            self._item.quality += 1
+        if self._item.sell_in < 10:
+            if self._item.quality < MAX_QUANTITY:
+                self._item.quality += 1
+        if self._item.sell_in < 5:
+            if self._item.quality < MAX_QUANTITY:
+                self._item.quality += 1
 
 
 class Sulfuras(ItemWrap):
