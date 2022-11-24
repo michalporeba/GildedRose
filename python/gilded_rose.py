@@ -9,7 +9,6 @@ MIN_QUANTITY = 0
 MAX_QUANTITY = 50
 
 class GildedRose(object):
-
     def __init__(self, items):
         self.items = [self._decorate_item(item) for item in items]
 
@@ -36,7 +35,6 @@ class Item:
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
-# Since I cannot change the Item class I will try to use the decorator pattern
 
 class ItemWrap(Item):
     _item: Item = None 
@@ -66,22 +64,6 @@ class ItemWrap(Item):
     def increase_quality(self):
         if self._item.quality < MAX_QUANTITY:
             self._item.quality += 1
-
-    @property
-    def name(self):
-        return self._item.name
-
-    @property 
-    def sell_in(self):
-        return self._item.sell_in 
-
-    @property 
-    def quality(self):
-        return self._item.quality 
-
-    @quality.setter 
-    def quality(self, value):
-        self._item.quality = value 
 
 
 class AgedBrie(ItemWrap):
