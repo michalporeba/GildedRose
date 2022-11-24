@@ -100,5 +100,9 @@ class Sulfuras(ItemWrap):
     def __init__(self, item):
         super().__init__(item) 
 
-    def next_day(self):
+    def _adjust_sell_in(self):
         pass
+
+    def _adjust_quality(self):
+        pass 
+    
