@@ -90,28 +90,8 @@ class ItemWrap(Item):
         self._item.quality = value 
 
 class Sulfuras(ItemWrap):
-    _item: Item = None 
     def __init__(self, item):
-        self._item = item 
-    
-    def __repr__(self):
-        return super().__repr__()
+        super().__init__(item) 
 
     def next_day(self):
         pass
-
-    @property
-    def name(self):
-        return self._item.name
-
-    @property 
-    def sell_in(self):
-        return self._item.sell_in 
-
-    @property 
-    def quality(self):
-        return self._item.quality 
-
-    @quality.setter 
-    def quality(self, value):
-        self._item.quality = value 
