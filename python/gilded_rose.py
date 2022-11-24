@@ -51,15 +51,21 @@ class ItemWrap(Item):
         self._item.sell_in -= 1
 
     def _adjust_quality(self):
-        if self._item.quality > MIN_QUANTITY:
-            self._item.quality -= 1
+        self.decrease_quality()
         if self._item.sell_in < 0:
-            if self._item.quality > MIN_QUANTITY:
-                self._item.quality -= 1
+            self.decrease_quality()
 
     def next_day(self):
         self._adjust_sell_in()    
         self._adjust_quality()
+
+    def decrease_quality(self):
+        if self._item.quality > MIN_QUANTITY:
+            self._item.quality -= 1
+
+    def increase_quality(self):
+        if self._item.quality < MAX_QUANTITY:
+            self._item.quality += 1
 
     @property
     def name(self):
@@ -83,10 +89,9 @@ class AgedBrie(ItemWrap):
         super().__init__(item) 
 
     def _adjust_quality(self):
-        if self._item.quality < MAX_QUANTITY:
-            self._item.quality += 1
-        if self._item.sell_in < 0 and self._item.quality < MAX_QUANTITY:
-            self._item.quality += 1
+        self.increase_quality()
+        if self._item.sell_in < 0:
+            self.increase_quality()
 
 
 class BackstageTicket(ItemWrap):
@@ -94,14 +99,11 @@ class BackstageTicket(ItemWrap):
         super().__init__(item) 
 
     def _adjust_quality(self):
-        if self._item.quality < MAX_QUANTITY:
-            self._item.quality += 1
+        self.increase_quality()
         if self._item.sell_in < 10:
-            if self._item.quality < MAX_QUANTITY:
-                self._item.quality += 1
+            self.increase_quality()
         if self._item.sell_in < 5:
-            if self._item.quality < MAX_QUANTITY:
-                self._item.quality += 1
+            self.increase_quality()
         if self._item.sell_in < 0: 
             self._item.quality = 0
 
