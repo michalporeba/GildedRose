@@ -70,8 +70,15 @@ class ItemWrap(Item):
     def __repr__(self):
         return super().__repr__()
 
-    def next_day(self):
+    def _adjust_sell_in(self):
         self._item.sell_in -= 1
+
+    def _adjust_quality(self):
+        pass 
+
+    def next_day(self):
+        self._adjust_sell_in()    
+        self._adjust_quality()
 
     @property
     def name(self):
