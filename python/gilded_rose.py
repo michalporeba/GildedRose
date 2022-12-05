@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# This will be an attempt to solve the Gilded Rose problem 
+# using principles of functional programming
+
 class GildedRose(object):
 
     def __init__(self, items):
