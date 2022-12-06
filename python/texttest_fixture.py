@@ -17,6 +17,7 @@ if __name__ == "__main__":
              Item(name="Conjured Mana Cake", sell_in=3, quality=6),  # <-- :O
             ]
 
+    sut = GildedRose(items)
     days = 2
     import sys
     if len(sys.argv) > 1:
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     for day in range(days):
         print("-------- day %s --------" % day)
         print("name, sellIn, quality")
-        for item in items:
+        for item in sut.items:
             print(item)
         print("")
-        GildedRose(items).update_quality()
+        sut.update_quality()

@@ -3,6 +3,8 @@
 # This will be an attempt to solve the Gilded Rose problem 
 # using principles of functional programming
 
+import copy
+
 MAX_QUALITY = 50
 MIN_QUALITY = 0
 MIN_SELL_IN = 0
@@ -24,10 +26,11 @@ class GildedRose(object):
         self.items = items
 
     def _age_an_item(self, item: Item): 
-        return item
+        return copy.copy(item)
 
     def update_quality(self):
-        for item in [self._age_an_item(i) for i in self.items]:
+        self.items = [self._age_an_item(i) for i in self.items]
+        for item in self.items:
             if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
                 if item.quality > MIN_QUALITY:
                     if item.name != "Sulfuras, Hand of Ragnaros":
