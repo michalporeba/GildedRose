@@ -32,8 +32,17 @@ class GildedRose(object):
         copied.quality = quality or item.quality
         return copied
 
+    def _unchaged_quality(self, item: Item) -> int:
+        return item.quality 
+
+    def _reduced_quality_with_age(self, item: Item) -> int:
+        if item.quality > MIN_QUALITY: 
+            return item.quality - 1
+        return 0
+
     def _age_an_item(self, item: Item):
-        return item
+        quality_function = self._unchaged_quality
+        return self._copy_item_with(item, item.sell_in, quality_function(item))
 
     def update_quality(self):
         self.items = [self._age_an_item(i) for i in self.items]
