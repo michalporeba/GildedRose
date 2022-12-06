@@ -7,13 +7,27 @@ MAX_QUALITY = 50
 MIN_QUALITY = 0
 MIN_SELL_IN = 0
 
+
+class Item:
+    def __init__(self, name, sell_in, quality):
+        self.name = name
+        self.sell_in = sell_in
+        self.quality = quality
+
+    def __repr__(self):
+        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+
 class GildedRose(object):
 
     def __init__(self, items):
         self.items = items
 
+    def _age_an_item(self, item: Item): 
+        return item
+
     def update_quality(self):
-        for item in self.items:
+        for item in [self._age_an_item(i) for i in self.items]:
             if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
                 if item.quality > MIN_QUALITY:
                     if item.name != "Sulfuras, Hand of Ragnaros":
@@ -42,12 +56,3 @@ class GildedRose(object):
                     if item.quality < MAX_QUALITY:
                         item.quality += 1
 
-
-class Item:
-    def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
-
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
