@@ -41,16 +41,19 @@ class GildedRose(object):
         return 0
 
     def _age_an_item(self, item: Item):
-        quality_function = self._unchaged_quality
+        quality_function = {
+            'Aged Brie': self._unchaged_quality,
+            'Backstage passes to a TAFKAL80ETC concert': self._unchaged_quality,
+            'Sulfuras, Hand of Ragnaros': self._unchaged_quality,
+        }.get(item.name, self._reduced_quality_with_age)
+
         return self._copy_item_with(item, item.sell_in, quality_function(item))
 
     def update_quality(self):
         self.items = [self._age_an_item(i) for i in self.items]
         for item in self.items:
             if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.quality > MIN_QUALITY:
-                    if item.name != "Sulfuras, Hand of Ragnaros":
-                        item.quality -= 1
+                pass
             else:
                 if item.quality < MAX_QUALITY:
                     item.quality += + 1
