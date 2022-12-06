@@ -32,7 +32,7 @@ class GildedRose(object):
         copied.quality = quality or item.quality
         return copied
 
-    def _unchaged_quality(self, item: Item) -> int:
+    def _unchanged_quality(self, item: Item) -> int:
         return item.quality 
 
     def _reduced_quality_with_age(self, item: Item) -> int:
@@ -53,7 +53,7 @@ class GildedRose(object):
         quality_function = {
             'Aged Brie': self._increase_quality_with_age,
             'Backstage passes to a TAFKAL80ETC concert': self._increase_concert_quality_with_age,
-            'Sulfuras, Hand of Ragnaros': self._unchaged_quality,
+            'Sulfuras, Hand of Ragnaros': self._unchanged_quality,
         }.get(item.name, self._reduced_quality_with_age)
 
         return self._copy_item_with(item, item.sell_in, quality_function(item))
