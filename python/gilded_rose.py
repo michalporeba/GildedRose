@@ -36,14 +36,23 @@ class GildedRose(object):
         return item.quality 
 
     def _reduced_quality_with_age(self, item: Item) -> int:
-        if item.quality > MIN_QUALITY: 
-            return item.quality - 1
-        return 0
+        return max(MIN_QUALITY, item.quality-1)
+
+    def _increase_quality_with_age(self, item: Item) -> int:
+        return min(MAX_QUALITY, item.quality+1)
+
+    def _increase_concert_quality_with_age(self, item: Item) -> int:
+        quality = item.quality + 1
+        if item.sell_in < 11:
+            quality += 1
+        if item.sell_in < 6:
+            quality += 1
+        return min(MAX_QUALITY, quality)
 
     def _age_an_item(self, item: Item):
         quality_function = {
-            'Aged Brie': self._unchaged_quality,
-            'Backstage passes to a TAFKAL80ETC concert': self._unchaged_quality,
+            'Aged Brie': self._increase_quality_with_age,
+            'Backstage passes to a TAFKAL80ETC concert': self._increase_concert_quality_with_age,
             'Sulfuras, Hand of Ragnaros': self._unchaged_quality,
         }.get(item.name, self._reduced_quality_with_age)
 
@@ -52,18 +61,6 @@ class GildedRose(object):
     def update_quality(self):
         self.items = [self._age_an_item(i) for i in self.items]
         for item in self.items:
-            if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-                pass
-            else:
-                if item.quality < MAX_QUALITY:
-                    item.quality += + 1
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            if item.quality < MAX_QUALITY:
-                                item.quality += 1
-                        if item.sell_in < 6:
-                            if item.quality < MAX_QUALITY:
-                                item.quality += 1
             if item.name != "Sulfuras, Hand of Ragnaros":
                 item.sell_in -= 1
             if item.sell_in < MIN_SELL_IN:
