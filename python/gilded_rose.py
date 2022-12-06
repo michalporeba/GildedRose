@@ -25,8 +25,15 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
-    def _age_an_item(self, item: Item): 
-        return copy.copy(item)
+
+    def _copy_item_with(self, item: Item, sell_in: int = None, quality: int = None): 
+        copied = copy.copy(item)
+        copied.sell_in = sell_in or item.sell_in
+        copied.quality = quality or item.quality
+        return copied
+
+    def _age_an_item(self, item: Item):
+        return item
 
     def update_quality(self):
         self.items = [self._age_an_item(i) for i in self.items]
