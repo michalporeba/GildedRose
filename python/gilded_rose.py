@@ -32,6 +32,9 @@ class GildedRose(object):
         copied.quality = quality or item.quality
         return copied
 
+    def _unchanged_sell_in(self, item: Item) -> int:
+        return item.sell_in 
+
     def _unchanged_quality(self, item: Item) -> int:
         return item.quality 
 
@@ -50,13 +53,18 @@ class GildedRose(object):
         return min(MAX_QUALITY, quality)
 
     def _age_an_item(self, item: Item):
+        sell_in_function = {
+            'Aged Brie': self._unchanged_sell_in,
+            'Backstage passes to a TAFKAL80ETC concert': self._unchanged_sell_in,
+            'Sulfuras, Hand of Ragnaros': self._unchanged_sell_in,
+        }.get(item.name, self._unchanged_sell_in)
+
         quality_function = {
             'Aged Brie': self._increase_quality_with_age,
             'Backstage passes to a TAFKAL80ETC concert': self._increase_concert_quality_with_age,
             'Sulfuras, Hand of Ragnaros': self._unchanged_quality,
         }.get(item.name, self._reduced_quality_with_age)
-
-        return self._copy_item_with(item, item.sell_in, quality_function(item))
+        return self._copy_item_with(item, sell_in_function(item), quality_function(item))
 
     def update_quality(self):
         self.items = [self._age_an_item(i) for i in self.items]
